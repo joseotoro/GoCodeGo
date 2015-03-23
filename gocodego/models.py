@@ -1,20 +1,27 @@
 from django.db import models
+from django import forms
+from django.contrib import admin
 
 class Problem(models.Model):
-    # Title of the problem
-    title = models.CharField(max_length=200)
-
-    # Description of the problem	
+    title = models.CharField(max_length=200)	
     description = models.CharField(max_length=2000)
-
-    # Template with initial code for start coding
     template = models.CharField(max_length=2000)
-
-    # Code for check the solution
     test_cases = models.CharField(max_length=2000)
-
-    # Category
     category = models.CharField(max_length=100)
-
-    # Publication date
     pub_date = models.DateTimeField('date published')
+ 
+
+class ProblemForm(forms.ModelForm):
+    title = forms.CharField()
+    description = forms.CharField(widget=forms.Textarea)
+    template = forms.CharField(widget=forms.Textarea)
+    test_cases = forms.CharField(widget=forms.Textarea)
+    category = forms.CharField()
+    pub_date = forms.DateTimeField()
+
+    class Meta:
+        model = Problem 
+
+@admin.register(Problem)
+class ProblemAdmin(admin.ModelAdmin):
+    form = ProblemForm
