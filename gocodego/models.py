@@ -26,7 +26,6 @@ class ProblemSolution(models.Model):
     user = models.ForeignKey(User)
     problem = models.ForeignKey(Problem)
     solution = models.TextField(max_length=2000)
-    votes = models.ManyToManyField(User, related_name='votes', blank=True)
 
     objects = GetOrNoneManager()
 
