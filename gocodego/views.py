@@ -32,6 +32,14 @@ def problems(request):
     
     return render(request, 'problem/list.html', {'problems': Problem.objects.all, 'solved': prob_solved})
 
+def search(request, name):
+    prob_solved = []
+    probs = Problem.objects.filter(title__icontains=name)
+    if request.user.is_authenticated():
+        prob_solved = probs.filter(user=request.user)
+        prob_solved = map(lambda prob: prob.problem.id, prob_solved)
+    
+    return render(request, 'problem/list.html', {'problems': probs.all, 'solved': prob_solved})
 
 def profile(request):
     if not request.user.is_authenticated():
