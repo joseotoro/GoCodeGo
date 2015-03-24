@@ -75,7 +75,12 @@ $.ajaxSetup({
 	</div>
 	<div class="col-md-6 column">
 		<h1>Start coding here!</h1>
-		<div id="editor">{{ problem.template }}</div>
+		{% if solved %}
+			<div id="editor">{{ solution }}</div>
+		{% else %}
+			<div id="editor">{{ problem.template }}</div>
+		{% endif %}
+		
 		<div align="right">
 	        {% if user.is_authenticated %}
 		        {% if solved %}

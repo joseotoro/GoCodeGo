@@ -13,7 +13,7 @@ from models import Problem, ProblemSolution
 @login_required
 def check(request):
     if request.is_ajax() and request.user.is_authenticated():
-        code_user =  request.POST['code']
+        code_user =  request.POST['code'].strip()
         problem_id = int(request.POST['problem'])
 
         solved = ProblemSolution.objects.get_or_none(problem=problem_id, user=request.user) is not None
@@ -31,7 +31,8 @@ def check(request):
             res = session_comp_run(code)
 
             if res == "": # Problem solved
-                pass
+                p = ProblemSolution(user=request.user, problem=Problem.objects.get(id=problem_id), solution=code_user)
+                p.save()
 
             return HttpResponse(res)
         else:

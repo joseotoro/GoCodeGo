@@ -16,17 +16,19 @@ def logout(request):
 def detail(request, problem_id):
     problem = get_object_or_404(Problem, pk=problem_id)
 
-    solved = False
     if request.user.is_authenticated():
-        solved = ProblemSolution.objects.get_or_none(problem=problem, user=request.user) is not None
+        solved = ProblemSolution.objects.get_or_none(problem=problem, user=request.user)
+        if solved is not None:
+            solution = solved.solution
+            return render(request, 'problem/detail.html', {'problem': problem, 'solved': True, 'solution': solution})
 
-    return render(request, 'problem/detail.html', {'problem': problem, 'solved': solved})
+    return render(request, 'problem/detail.html', {'problem': problem, 'solved': False})
 
 def problems(request):
     prob_solved = []
     if request.user.is_authenticated():
         prob_solved = ProblemSolution.objects.filter(user=request.user)
-        prob_solved = map(lambda prob: prob.id, prob_solved)
+        prob_solved = map(lambda prob: prob.problem.id, prob_solved)
     
     return render(request, 'problem/list.html', {'problems': Problem.objects.all, 'solved': prob_solved})
 
