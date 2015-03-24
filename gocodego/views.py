@@ -16,3 +16,8 @@ def logout(request):
 def detail(request, problem_id):
 	problem = get_object_or_404(Problem, pk=problem_id)
 	return render(request, 'problem/detail.html', {'problem': problem})
+
+def profile(request):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect('/login/google-oauth2/')
+	return render(request, 'profile.html')

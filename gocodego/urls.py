@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'', include('social_auth.urls')),
     url(r'^logout/', views.logout, name='logout'),
     url(r'^problem/(\d)$', views.detail, name='detail'),
+    url(r'^profile/$', views.profile, name='profile'),
     url(r'^$', views.index, name='index'),
 )

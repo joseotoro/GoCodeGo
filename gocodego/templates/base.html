@@ -1,0 +1,94 @@
+<html>
+
+<head>
+<title> {%block pagetitle %} {% endblock %}</title>
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+
+{% load staticfiles %}
+
+<script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
+
+{% bootstrap_javascript %}
+
+{% load gravatar %}
+
+<style type="text/css">
+#editor {
+    position: relative;
+    width: 90%;
+    height: 500px;
+    }
+.navbar .profile-image{
+    margin: -15px 0px;
+    height: 40px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="navbar-header">
+                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">GoCodeGo</a>
+                </div>
+                
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li {% block homeactive %} {% endblock %}>
+                            <a href="/">Home</a>
+                        </li>
+                        <li {% block problemsactive %} {% endblock %}>
+                            <a href="/problems/">Problems</a>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" />
+                        </div> <button type="submit" class="btn btn-default">Search</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.id %}
+                        <li class="dropdown">
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                             <img src="{% gravatar_url user.email %}" class="profile-image"/> {{ user.username }}<strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/profile/">Profile</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                    <a rel="nofollow" class="logout" href="/logout/">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+            </nav>
+            <div class="row clearfix">
+                {% block primary %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+  
+</div>
+</body>
+</html>
+
