@@ -1,7 +1,7 @@
 <html>
 
 <head>
-<title> {%block pagetitle %} {% endblock %}</title>
+<title> {% block pagetitle %} {% endblock %}</title>
 {% load bootstrap3 %}
 
 {# Load CSS and JavaScript #}
@@ -25,7 +25,11 @@
     margin: -15px 0px;
     height: 40px;
 }
+{% block css %} {% endblock %}
 </style>
+
+{% block head %}{% endblock %}
+
 </head>
 
 <body>
@@ -44,6 +48,11 @@
                         <li {% block homeactive %} {% endblock %}>
                             <a href="/">Home</a>
                         </li>
+                        {% if user.is_authenticated %}
+                        <li {% block profileactive %} {% endblock %}>
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        {% endif %}
                         <li {% block problemsactive %} {% endblock %}>
                             <a href="/problems/">Problems</a>
                         </li>
@@ -54,7 +63,7 @@
                         </div> <button type="submit" class="btn btn-default">Search</button>
                     </form>
                     <ul class="nav navbar-nav navbar-right">
-                        {% if user.id %}
+                        {% if user.is_authenticated %}
                         <li class="dropdown">
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                              <img src="{% gravatar_url user.email %}" class="profile-image"/> {{ user.username }}<strong class="caret"></strong></a>

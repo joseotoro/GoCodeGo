@@ -3,14 +3,20 @@ from django.contrib import admin
 import views
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'gocodego.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
+    # Admin site
     url(r'^admin/', include(admin.site.urls)),
+
+    # Social auth
     url(r'', include('social_auth.urls')),
     url(r'^logout/', views.logout, name='logout'),
-    url(r'^problem/(\d)$', views.detail, name='detail'),
+
+    # Problems
+    url(r'^problems/$', views.problems, name='problems'),
+    url(r'^problems/(\d)$', views.detail, name='detail'),
+
+    # Profile
     url(r'^profile/$', views.profile, name='profile'),
+
+    # Index
     url(r'^$', views.index, name='index'),
 )

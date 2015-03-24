@@ -16,8 +16,15 @@
 		<div id="editor">{{ problem.template }}</div>
 		<div align="right">
 			<form role="form" method="post">
-		        {% csrf_token %}
-		        <button type="submit" class="btn btn-primary">Submit!</button>
+		        {% if user.is_authenticated %}
+			        {% if solved %}
+			        	<a class="btn btn-success" href"#" role="button">Solved!</a>
+			        {% else %}
+			        	<button type="submit" class="btn btn-primary">Submit!</button>
+			        {% endif %}
+			    {% else %}
+			    	<a class="btn btn-primary" href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
+		        {% endif %}
 		    </form>
 		</div>
 	</div>

@@ -3,6 +3,14 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
 
+class GetOrNoneManager(models.Manager):
+    """Adds get_or_none method to objects"""
+    def get_or_none(self, **kwargs):
+        try:
+            return self.get(**kwargs)
+        except self.model.DoesNotExist:
+            return None
+
 class Problem(models.Model):
     title = models.CharField(max_length=200)	
     description = models.TextField(max_length=2000)
@@ -18,8 +26,17 @@ class ProblemSolution(models.Model):
     user = models.ForeignKey(User)
     problem = models.ForeignKey(Problem)
     solution = models.TextField(max_length=2000)
-    votes = models.ManyToManyField(User, related_name='votes')
+    votes = models.ManyToManyField(User, related_name='votes', blank=True)
+
+    objects = GetOrNoneManager()
+
+    def __str__(self):
+        return str(self.problem) + ' - ' + self.user.username
  
 @admin.register(Problem)
 class ProblemAdmin(admin.ModelAdmin):
     fields = ('title', 'category', 'description', 'template', 'test_cases', 'pub_date')
+
+@admin.register(ProblemSolution)
+class ProblemSolutionAdmin(admin.ModelAdmin):
+    pass
