@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 import views
+import go
 
 urlpatterns = patterns('',
     # Admin site
@@ -13,6 +14,7 @@ urlpatterns = patterns('',
     # Problems
     url(r'^problems/$', views.problems, name='problems'),
     url(r'^problems/(\d)$', views.detail, name='detail'),
+    url(r'^problems/check_solution/$', go.check, name='check_solution'),
 
     # Profile
     url(r'^profile/$', views.profile, name='profile'),

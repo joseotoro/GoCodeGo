@@ -4,28 +4,84 @@
 
 {% block problemsactive %} class="active" {% endblock %}
 
+{% block head %} 
+<script type="text/javascript">
+$(document).ready(function() {
+   $("#subm").click(function(event){
+   		event.preventDefault();
+        $.ajax({
+             type:"POST",
+             url:"/problems/check_solution/",
+             data: {
+             		'problem': {{ problem.id }},
+                    'code': ace.edit("editor").getSession().getValue(),
+                    },
+             success: function(state, message){
+             	console.log(state);
+             	console.log(message);
+                 $('#mess').html(message);
+                 if(state == 0) {
+                 	//$('#subm').fadeOut();
+                 }
+            },
+            "beforeSend": function(xhr, settings) {
+		        $.ajaxSettings.beforeSend(xhr, settings);
+		    },
+        });
+   });
+});
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+            // Only send the token to relative URLs i.e. locally.
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+    }
+});
+</script>
+{% endblock %}
+
 {% block primary %}
+{% csrf_token %}
 <div class="col-md-6 column">
 		<h1>{{ problem.title }}</h1><h5>Category: {{ problem.category }}</h5>
 		<div class="jumbotron">
 			{{ problem.description|linebreaksbr }}
+		</div>
+		<h1>Messages</h1>
+		<div class="jumbotron" id="mess">
 		</div>
 	</div>
 	<div class="col-md-6 column">
 		<h1>Start coding here!</h1>
 		<div id="editor">{{ problem.template }}</div>
 		<div align="right">
-			<form role="form" method="post">
-		        {% if user.is_authenticated %}
-			        {% if solved %}
-			        	<a class="btn btn-success" href"#" role="button">Solved!</a>
-			        {% else %}
-			        	<button type="submit" class="btn btn-primary">Submit!</button>
-			        {% endif %}
-			    {% else %}
-			    	<a class="btn btn-primary" href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
+	        {% if user.is_authenticated %}
+		        {% if solved %}
+		        	<a class="btn btn-success" href"#" role="button">Solved!</a>
+		        {% else %}
+		        	<a class="btn btn-primary" href="#" id="subm">Submit!</a>
 		        {% endif %}
-		    </form>
+		    {% else %}
+		    	<a class="btn btn-primary" href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
+	        {% endif %}
 		</div>
 	</div>
 </div>
@@ -37,4 +93,5 @@
     editor.setTheme("ace/theme/clouds");
     editor.getSession().setMode("ace/mode/golang");
 </script>
+
 {% endblock %}
