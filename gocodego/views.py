@@ -13,6 +13,6 @@ def logout(request):
     auth_logout(request)
     return HttpResponseRedirect('/')
 
-def problem(request, problem_id):
+def detail(request, problem_id):
 	problem = get_object_or_404(Problem, pk=problem_id)
 	return render(request, 'problem/detail.html', {'problem': problem})
