@@ -1,13 +1,217 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block pagetitle %} GoCodeGo {% endblock %}
+<head>
+    {% load staticfiles %}
+    {% load gravatar %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-{% block homeactive %} class="active" {% endblock %}
+    <title>Freelancer - Start Bootstrap Theme</title>
 
-{% block primary %}
-<div class="col-md-12 column">
-	<div class="jumbotron">
-	    <h1>Welcome to GoCodeGo!</h1>
-	</div>
-</div>
-{% endblock %}
+    <!-- Custom CSS -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/freelancer.css" %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static "font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style type="text/css">
+#editor {
+    position: relative;
+    width: 90%;
+    height: 500px;
+    }
+.navbar .profile-image{
+    margin: -30px 0px;
+    height: 60px;
+}
+{% block css %} {% endblock %}
+</style>
+
+{% block head %}{% endblock %}
+
+</head>
+
+<body id="page-top" class="index">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand" href="#page-top">GoCodeGo</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li {% block homeactive %} {% endblock %}>
+                            <a href="/">Home</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li {% block profileactive %} {% endblock %}>
+                            <a href="/profile/">Profile</a>
+                        </li>
+                        {% endif %}
+                        <li {% block problemsactive %} {% endblock %}>
+                            <a href="/problems/">Problems</a>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left" role="form" method="POST" action="/search/">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="search" />
+                        </div> <button type="submit" class="btn btn-default">Search</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.is_authenticated %}
+                        <li class="dropdown">
+                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                             <img src="{% gravatar_url user.email 100 %}" class="profile-image"/> {{ user.username }}<strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/profile/">Profile</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                    <a rel="nofollow" class="logout" href="/logout/">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="{% static "img/gorun.gif" %}" alt="">
+                    <div class="intro-text">
+                        <span class="name">GoCodeGo</span>
+                        <hr class="star-light">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Portfolio Grid Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Learn!</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <p>
+                Quite usually, learning a new programming language becomes a tedious task, a senseless chore. We aimlessly hack and tinkering becomes a repetitive process of not-getting-a-damn-thing: we advance cluelessly until we start getting it out of repetition. We'd all love ita, however, if our tinkering was directed from simple Hello world styled tidbits to the complex depths of a given language in an enjoyable manner!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="success" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Crash to learn!</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2">
+                    <p>Bash your head against problems increasingly! Have fun with the ever-developing difficulty!</p>
+                    <p>Compete with yourself to get better, grow more proficient and become what you want to be! </p>
+                </div>
+                <div class="col-lg-4">
+                    <p>Solving interesting problems one at a time can make any steep learning curve a walk through the park!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Go!</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <p>Google's Go language sounds like something neat to learn, but how hard could it be? It looks rather slick; even if that's the case, however, boredom strikes with such an ease it'd be great to make the code-spanking process entertaining... Why can't there be some platform that presents series of problems by how hard they are so I learn in a not-so-perhaps-tiring way...?</p>
+                <center>
+                <h3>OH!</h3>
+                <h2>Go Code Go!</h2>
+                </center>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-above">
+            <div class="container">
+                <div class="row">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; GoCodeGo 2015
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll visible-xs visble-sm">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+    <script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="{% static "js/classie.js" %}"></script>
+    <script src="{% static "js/cbpAnimatedHeader.js" %}"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static "js/freelancer.js" %}"></script>
+
+</body>
+
+</html>

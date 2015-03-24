@@ -63,38 +63,42 @@ $.ajaxSetup({
 {% endblock %}
 
 {% block primary %}
-{% csrf_token %}
-<div class="col-md-6 column">
-		<h1>{{ problem.title }}</h1><h5>Category: {{ problem.category }}</h5>
-		<div class="jumbotron">
-			{{ problem.description|linebreaksbr }}
-		</div>
-		<h1>Messages</h1>
-		<div class="jumbotron" id="mess">
+<section class="success">
+    <div class="container">
+		<div class="col-md-6 column">
+				<h1>{{ problem.title }}</h1><h5>Category: {{ problem.category }}</h5>
+				<div class="jumbotron">
+					{{ problem.description|linebreaksbr }}
+				</div>
+				<h1>Messages</h1>
+				<div class="jumbotron" id="mess">
+				</div>
+			</div>
+			<div class="col-md-6 column">
+				<h1>Start coding here!</h1>
+				{% if solved %}
+					<div id="editor">{{ solution }}</div>
+				{% else %}
+					<div id="editor">{{ problem.template }}</div>
+				{% endif %}
+				<div><br /></div>
+				<div align="right">
+			        {% if user.is_authenticated %}
+				        {% if solved %}
+				        	<a class="btn btn-primary" href"#" role="button">Solved!</a>
+				        {% else %}
+				        	<a class="btn btn-primary" href="#" id="subm">Submit!</a>
+				        	<a class="btn btn-primary" href="/problems/" id="ret">Return to problems</a>
+				        {% endif %}
+				    {% else %}
+				    	<a class="btn btn-primary" href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
+			        {% endif %}
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="col-md-6 column">
-		<h1>Start coding here!</h1>
-		{% if solved %}
-			<div id="editor">{{ solution }}</div>
-		{% else %}
-			<div id="editor">{{ problem.template }}</div>
-		{% endif %}
-		
-		<div align="right">
-	        {% if user.is_authenticated %}
-		        {% if solved %}
-		        	<a class="btn btn-success" href"#" role="button">Solved!</a>
-		        {% else %}
-		        	<a class="btn btn-primary" href="#" id="subm">Submit!</a>
-		        	<a class="btn btn-primary" href="/problems/" id="ret">Return to problems</a>
-		        {% endif %}
-		    {% else %}
-		    	<a class="btn btn-primary" href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
-	        {% endif %}
-		</div>
-	</div>
-</div>
+</section>
+
 
 {% load staticfiles %}
 <script src="{% static "js/ace/ace.js" %}" type="text/javascript"></script>

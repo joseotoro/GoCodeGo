@@ -13,9 +13,8 @@ urlpatterns = patterns('',
 
     # Problems
     url(r'^problems/$', views.problems, name='problems'),
-    url(r'^search/$', views.problems, name='problems'),
+    url(r'^search/$', views.search, name='search'),
     url(r'^problems/(\d)$', views.detail, name='detail'),
-    url(r'^search/(.*)$', views.search, name='search'),
     url(r'^problems/check_solution/$', go.check, name='check_solution'),
 
     # Profile

@@ -32,11 +32,15 @@ def problems(request):
     
     return render(request, 'problem/list.html', {'problems': Problem.objects.all, 'solved': prob_solved})
 
-def search(request, name):
+def search(request):
+    if 'search' not in request.POST:
+        return problems(request)
+
+    name = request.POST['search']
     prob_solved = []
     probs = Problem.objects.filter(title__icontains=name)
     if request.user.is_authenticated():
-        prob_solved = probs.filter(user=request.user)
+        prob_solved = ProblemSolution.objects.filter(user=request.user)
         prob_solved = map(lambda prob: prob.problem.id, prob_solved)
     
     return render(request, 'problem/list.html', {'problems': probs.all, 'solved': prob_solved})

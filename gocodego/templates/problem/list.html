@@ -5,26 +5,28 @@
 {% block problemsactive %} class="active" {% endblock %}
 
 {% block primary %}
-
-<div class="col-md-12 column">
-	<div class="jumbotron">
-		<h2>Problems</h2>
-		{% for problem in problems %}
-		<div class="media">
-		  <div class="media-left">
-		    {{ problem.category }}
-		      <!--<img class="media-object" src="#" alt="...">-->
-		  </div>
-		  <div class="media-body">
-		    <span class="media-heading"><a href="/problems/{{problem.id}}">{{ problem.title }}</a>
-		    {% if problem.id in solved %}
-		    	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Solved!
-		    {% endif %}
-		    </span>
-		  </div>
+<section class="success">
+    <div class="container">
+		<div class="col-md-12 column">
+			<div class="jumbotron">
+				<h2>Problems</h2>
+				{% for problem in problems %}
+				<div class="media">
+				  <div class="media-left">
+				    {{ problem.category }}
+				      <!--<img class="media-object" src="#" alt="...">-->
+				  </div>
+				  <div class="media-body">
+				    <span class="media-heading"><a href="/problems/{{problem.id}}">{{ problem.title }}</a>
+				    {% if problem.id in solved %}
+				    	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Solved!
+				    {% endif %}
+				    </span>
+				  </div>
+				</div>
+				{% endfor %}
+			</div>
 		</div>
-		{% endfor %}
 	</div>
-</div>
-
+</section>
 {% endblock %}
