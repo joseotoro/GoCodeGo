@@ -112,7 +112,7 @@ package main
         '''
 print(session_comp_run(func, base))
 
-#source = 'code/hello.go'
+#source = 'go/hello.go'
 #target = 'asdf.exe'
 #print(compile_go(source, target))
 #print(run_timeout(target, [], 4))
