@@ -49,7 +49,19 @@ def profile(request):
     if not request.user.is_authenticated():
 	   return HttpResponseRedirect('/login/google-oauth2/')
 
-    prob_solved = ProblemSolution.objects.filter(user=request.user).count()
-    points = prob_solved * 10
+    prob_solved = map(lambda prob: prob.problem.id, ProblemSolution.objects.filter(user=request.user))
+    problems_cat = map(lambda prob: prob.category, Problem.objects.filter(id__in=prob_solved))
+    points = 0
 
-    return render(request, 'profile.html', {'problems': prob_solved, 'points': points})
+    for p in problems_cat:
+        print p
+        if p == "Starter":
+            points += 10
+        elif p == "Easy":
+            points += 50
+        elif p == "Medium":
+            points += 250
+        elif p == "Hard":
+            points += 2000
+
+    return render(request, 'profile.html', {'problems': len(prob_solved), 'points': points})

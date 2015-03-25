@@ -22,6 +22,7 @@ def check(request):
             problem_testcode = Problem.objects.get(id=problem_id).test_cases
             code = """package main
                         import "fmt"
+                        import "math"
 
                         func assert(result interface{}, expected interface{}){
                             if(result != expected){

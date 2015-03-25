@@ -57,7 +57,7 @@
       js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.0";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
-    
+
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -75,7 +75,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li {% block homeactive %} {% endblock %}>
+                        <li class="active">
                             <a href="/">Home</a>
                         </li>
                         {% if user.is_authenticated %}
@@ -163,8 +163,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
+                <div class="col-lg-4">
                     <p>Bash your head against problems increasingly! Have fun with the ever-developing difficulty!</p>
+                </div>
+                <div class="col-lg-4">
                     <p>Compete with yourself to get better, grow more proficient and become what you want to be! </p>
                 </div>
                 <div class="col-lg-4">
