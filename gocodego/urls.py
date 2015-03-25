@@ -18,7 +18,6 @@ urlpatterns = patterns('',
     url(r'^problems/check_solution/$', go.check, name='check_solution'),
 
     # Profile
-    #url(r'^profile/$', views.profile, name='profile'),
     url(r'^profile/(.*)$', views.profile, name='profile'),
 
     # Index
