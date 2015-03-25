@@ -80,7 +80,7 @@
                         </li>
                         {% if user.is_authenticated %}
                         <li {% block profileactive %} {% endblock %}>
-                            <a href="/profile/">Profile</a>
+                            <a href="/profile/{{ user.username }}">Profile</a>
                         </li>
                         {% endif %}
                         <li {% block problemsactive %} {% endblock %}>
@@ -100,7 +100,7 @@
                              <img src="{% gravatar_url user.email 100 %}" class="profile-image img-circle"/> {{ user.username }}<strong class="caret"></strong></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="/profile/">Profile</a>
+                                    <a href="/profile/{{ user.username }}">Profile</a>
                                 </li>
                                 <li class="divider">
                                 </li>

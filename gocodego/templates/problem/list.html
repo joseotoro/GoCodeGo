@@ -4,28 +4,49 @@
 
 {% block problemsactive %} class="active" {% endblock %}
 
+{% block css %}
+.container {
+	color: black;
+}
+{% endblock %}
+
 {% block primary %}
 <section class="success">
     <div class="container">
 		<div class="col-md-12 column">
-			<div class="jumbotron">
-				<h2>Problems</h2>
-				{% for problem in problems %}
-				<div class="media">
-				  <div class="media-left">
-				    {{ problem.category }}
-				      <!--<img class="media-object" src="#" alt="...">-->
-				  </div>
-				  <div class="media-body">
-				    <span class="media-heading"><a href="/problems/{{problem.id}}">{{ problem.title }}</a>
-				    {% if problem.id in solved %}
-				    	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Solved!
-				    {% endif %}
-				    </span>
-				  </div>
-				</div>
-				{% endfor %}
+			<div class="panel">
+
+			<div class="panel-heading">
+			<br />
+			<h3 class="panel-title text-primary"><span class="pull-left">
+			<i class="fa fa-dot-circle-o"></i> Problems</span></h3>
 			</div>
+			
+<div class="panel-body" style="display: block;">
+  <ul class="list-group">
+
+{% for problem in problems %}
+  <li class="list-group-item">
+    <a href="/problems/{{problem.id}}">{{ problem.title }}</a>
+    {% if problem.id in solved %}
+      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Solved!
+    {% endif %}
+    <span class="pull-right">
+    	{% if problem.category == "Starter" %}
+      <span class="label label-success">Starter</span>
+    {% elif problem.category == "Easy" %}
+      <span class="label label-info">Easy</span>
+    {% elif problem.category == "Medium" %}
+      <span class="label label-warning">Medium</span>
+    {% elif problem.category == "Hard" %}
+      <span class="label label-pink">Hard</span>
+    {% endif %}
+    </span>
+  </li>
+{% endfor %}
+</ul>
+</div>
+</div>
 		</div>
 	</div>
 </section>
