@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_auth',
-    'bootstrap3',
     'django_gravatar',
     'gocodego',
 )
