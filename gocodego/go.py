@@ -24,6 +24,8 @@ def check(request):
                         import "fmt"
                         import "math"
 
+                        var _ = math.E
+
                         func assert(result interface{}, expected interface{}){
                             if(result != expected){
                                 panic(fmt.Sprintf("FAILED! Yielded %v, but expected %v as the result", result, expected))
