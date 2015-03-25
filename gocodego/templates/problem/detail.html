@@ -7,6 +7,10 @@
 {% block head %} 
 <script type="text/javascript">
 $(document).ready(function() {
+   {% if not solved %}
+   		$("#twit").hide();
+   {% endif %}
+   
    $("#ret").hide();
    $("#subm").click(function(event){
    		event.preventDefault();
@@ -23,6 +27,7 @@ $(document).ready(function() {
              		$('#mess').hide().html("<pre>Correct!</pre>").fadeIn();
              		$('#subm').hide();
              		$('#ret').fadeIn();
+             		$('#twit').fadeIn();
              	}
                 else {
                 	$('#mess').hide().html("<pre>" + message + "</pre>").fadeIn();
@@ -73,6 +78,9 @@ $.ajaxSetup({
 				<h1>Messages</h1>
 				<div class="jumbotron" id="mess">
 				</div>
+				<div id="twit">
+					<a href="https://twitter.com/share" class="twitter-share-button" data-url=" " data-text="I have solved '{{problem.title}}'!" data-via="GoCodeGo" data-size="large" data-related="GoCodeGo" data-count="none" id="twit">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+				</div>
 			</div>
 			<div class="col-md-6 column">
 				<h1>Start coding here!</h1>
@@ -85,7 +93,7 @@ $.ajaxSetup({
 				<div align="right">
 			        {% if user.is_authenticated %}
 				        {% if solved %}
-				        	<a class="btn btn-primary" href"#" role="button">Solved!</a>
+				        	<a class="btn btn-primary" href="#" role="button">Solved!</a>
 				        {% else %}
 				        	<a class="btn btn-primary" href="#" id="subm">Submit!</a>
 				        	<a class="btn btn-primary" href="/problems/" id="ret">Return to problems</a>
