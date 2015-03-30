@@ -63,7 +63,6 @@ def profile(request, user):
     points = 0
 
     for p in problems_cat:
-        print p
         if p == "Starter":
             points += 10
         elif p == "Easy":

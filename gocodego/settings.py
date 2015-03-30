@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -60,8 +60,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-GOOGLE_OAUTH2_CLIENT_ID      = '202350026748-u3tlunme6o1b2hm7kt9fhmdnm1lrki4m.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET  = 'uoZLkQEJ3Q926ixKJeGMuAtp'
+GOOGLE_OAUTH2_CLIENT_ID      = '695616240796-h9vm87ttii8sktg3mir2tqnna30qnc9g.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET  = 'vVnR00xoTD84U7k536aAFhIc'
 LOGIN_URL          = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL    = '/login-error/'
@@ -91,8 +91,12 @@ WSGI_APPLICATION = 'gocodego.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'gcg',
+        'USER': 'gcg',
+        'PASSWORD': 'maZ5cRrPU8cCfdQ7',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -101,7 +105,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 
@@ -114,7 +118,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
