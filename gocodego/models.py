@@ -1,5 +1,4 @@
 from django.db import models
-from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import User
 
@@ -26,6 +25,8 @@ class ProblemSolution(models.Model):
     user = models.ForeignKey(User)
     problem = models.ForeignKey(Problem)
     solution = models.TextField(max_length=2000)
+    pub_date = models.DateTimeField('last modification')
+    checked = models.BooleanField(default=False)
 
     objects = GetOrNoneManager()
 

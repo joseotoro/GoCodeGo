@@ -21,14 +21,14 @@ def detail(request, problem_id):
         solved = ProblemSolution.objects.get_or_none(problem=problem, user=request.user)
         if solved is not None:
             solution = solved.solution
-            return render(request, 'problem/detail.html', {'problem': problem, 'solved': True, 'solution': solution})
+            return render(request, 'problem/detail.html', { 'problem': problem, 'solved': solved.checked, 'load': solved is not None, 'solution': solution })
 
-    return render(request, 'problem/detail.html', {'problem': problem, 'solved': False})
+    return render(request, 'problem/detail.html', {'problem': problem, 'solved': False, 'load': False })
 
 def problems(request):
     prob_solved = []
     if request.user.is_authenticated():
-        prob_solved = ProblemSolution.objects.filter(user=request.user)
+        prob_solved = ProblemSolution.objects.filter(user=request.user, checked=True)
         prob_solved = map(lambda prob: prob.problem.id, prob_solved)
     
 
@@ -58,7 +58,7 @@ def search(request):
 def profile(request, user):
     user = get_object_or_404(User, username=user)
 
-    prob_solved = map(lambda prob: prob.problem.id, ProblemSolution.objects.filter(user=user))
+    prob_solved = map(lambda prob: prob.problem.id, ProblemSolution.objects.filter(user=user, checked=True))
     problems_cat = map(lambda prob: prob.category, Problem.objects.filter(id__in=prob_solved))
     points = 0
 

@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.utils import timezone
 
 import subprocess
 import time
@@ -12,13 +13,13 @@ from models import Problem, ProblemSolution
 
 @login_required
 def check(request):
-    if request.is_ajax() and request.user.is_authenticated():
+    if request.is_ajax():
         code_user =  request.POST['code'].strip()
         problem_id = int(request.POST['problem'])
 
-        solved = ProblemSolution.objects.get_or_none(problem=problem_id, user=request.user) is not None
+        check_solved = ProblemSolution.objects.get_or_none(problem=problem_id, user=request.user)
         
-        if not solved:
+        if check_solved is None or not check_solved.checked:
             problem_testcode = Problem.objects.get(id=problem_id).test_cases
             code = """package main
                         import "fmt"
@@ -34,14 +35,43 @@ def check(request):
             res = session_comp_run(code)
 
             if res == "": # Problem solved
-                p = ProblemSolution(user=request.user, problem=Problem.objects.get(id=problem_id), solution=code_user)
-                p.save()
+                if check_solved is None:
+                    check_solved = ProblemSolution(user=request.user, problem=Problem.objects.get(id=problem_id), solution=code_user, pub_date=timezone.now, checked=True)
+                else:
+                    check_solved.checked = True
+                    check_solved.solution = code_user
+                    check_solved.pub_date = timezone.now()
+
+                check_solved.save()
 
             return HttpResponse(res)
         else:
             return HttpResponse('You have already solved this problem!')
     else:
         return HttpResponse('')
+
+@login_required
+def save(request):
+    if request.is_ajax():
+        code_user = request.POST['code'].strip()
+        problem_id = int(request.POST['problem'])
+
+        solution = ProblemSolution.objects.get_or_none(problem=problem_id, user=request.user)
+
+        if solution is None:
+            solution = ProblemSolution(user=request.user, problem=Problem.objects.get(id=problem_id), solution=code_user, pub_date=timezone.now(), checked=False)
+            solution.save()
+        elif solution is not None and not solution.checked:
+            solution.solution = code_user
+            solution.pub_date = timezone.now()
+            solution.save()    
+        else:
+            return HttpResponse('You have already solved this problem!')
+
+        return HttpResponse('Save success!')
+    else:
+        return HttpResponse('')
+
 
 def compile_go(source_file, target_file):
     # Clean up the target file if it exists

@@ -11,7 +11,7 @@ $(document).ready(function() {
    		$("#twit").hide();
    {% endif %}
    
-   $("#ret").hide();
+   
    $("#subm").click(function(event){
    		event.preventDefault();
         $.ajax({
@@ -22,10 +22,10 @@ $(document).ready(function() {
                     'code': ace.edit("editor").getSession().getValue(),
                     },
              success: function(message){
-             	console.log(message);
              	if(message == "") {
              		$('#mess').hide().html("<pre>Correct!</pre>").fadeIn();
-             		$('#subm').hide();
+             		$('#save').hide();
+                    $('#subm').hide();
              		$('#ret').fadeIn();
              		$('#twit').fadeIn();
              	}
@@ -36,6 +36,23 @@ $(document).ready(function() {
             "beforeSend": function(xhr, settings) {
 		        $.ajaxSettings.beforeSend(xhr, settings);
 		    },
+        });
+   });
+   $("#save").click(function(event){
+        event.preventDefault();
+        $.ajax({
+             type:"POST",
+             url:"/problems/save_solution/",
+             data: {
+                    'problem': {{ problem.id }},
+                    'code': ace.edit("editor").getSession().getValue(),
+                    },
+             success: function(message){
+                $('#mess').hide().html("<pre>" + message + "</pre>").fadeIn();
+            },
+            "beforeSend": function(xhr, settings) {
+                $.ajaxSettings.beforeSend(xhr, settings);
+            },
         });
    });
 });
@@ -84,7 +101,7 @@ $.ajaxSetup({
 			</div>
 			<div class="col-md-6 column">
 				<h1>Start coding here!</h1>
-				{% if solved %}
+				{% if solved or load %}
 					<div id="editor">{{ solution }}</div>
 				{% else %}
 					<div id="editor">{{ problem.template }}</div>
@@ -95,8 +112,9 @@ $.ajaxSetup({
 				        {% if solved %}
 				        	<a class="btn btn-primary" href="#" role="button">Solved!</a>
 				        {% else %}
+                            <a class="btn btn-primary" href="#" id="save">Save</a>
 				        	<a class="btn btn-primary" href="#" id="subm">Submit!</a>
-				        	<a class="btn btn-primary" href="/problems/" id="ret">Return to problems</a>
+				        	<a class="btn btn-primary" href="/problems/" id="ret" style="display:none;">Return to problems</a>
 				        {% endif %}
 				    {% else %}
 				    	<a class="btn btn-primary" href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
