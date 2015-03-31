@@ -1,7 +1,9 @@
 /*!
- * Start Bootstrap - Freelancer Bootstrap Theme (http://startbootstrap.com)
+ * Original CSS: Start Bootstrap - Freelancer Bootstrap Theme (http://startbootstrap.com)
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ *
+ * Modifications: GoCodeGo
  */
 
 body {
@@ -23,6 +25,21 @@ a:active,
 a.active {
     outline: 0;
     color: #18bc9c;
+}
+
+#editor {
+    position: relative;
+    width: 90%;
+    height: 600px;
+}
+
+.navbar .profile-image{
+    margin: -30px 0px;
+    height: 60px;
+}
+
+.container .jumbotron{
+    color: black;
 }
 
 h1,
@@ -182,6 +199,19 @@ section h2 {
 section.success {
     color: #fff;
     background: #18bc9c;
+}
+
+.row-color {
+    background: #2c3e50;
+}
+
+.profile {
+    color: black;
+    background: #18bc9c;
+}
+
+.panel-prob {
+    color: #2c3e50;
 }
 
 @media(max-width:767px) {

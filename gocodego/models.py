@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib import admin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 class GetOrNoneManager(models.Manager):
     """Adds get_or_none method to objects"""
@@ -9,6 +9,14 @@ class GetOrNoneManager(models.Manager):
             return self.get(**kwargs)
         except self.model.DoesNotExist:
             return None
+
+class User(AbstractUser):
+    bio = models.TextField(max_length=1000, null=True)
+    twitter = models.CharField(max_length=80, null=True)
+    github = models.CharField(max_length=80, null=True)
+    linkedin = models.CharField(max_length=80, null=True)
+    facebook = models.CharField(max_length=80, null=True)
+    website = models.CharField(max_length=150, null=True)
 
 class Problem(models.Model):
     title = models.CharField(max_length=200)	
@@ -39,4 +47,8 @@ class ProblemAdmin(admin.ModelAdmin):
 
 @admin.register(ProblemSolution)
 class ProblemSolutionAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
     pass

@@ -1,9 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.models import User
 
-from models import Problem, ProblemSolution
+from models import Problem, ProblemSolution, User
 
 
 def index(request):

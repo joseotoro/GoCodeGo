@@ -7,8 +7,8 @@
 {% block head %} 
 <script type="text/javascript">
 $(document).ready(function() {
-   {% if not solved %}
-   		$("#twit").hide();
+   {% if solved %}
+   		$("#twit").hide().fadeIn();
    {% endif %}
    
    
@@ -86,7 +86,7 @@ $.ajaxSetup({
 
 {% block primary %}
 <section class="success">
-    <div class="container">
+    <div class="container row-color">
 		<div class="col-md-6 column">
 				<h1>{{ problem.title }}</h1><h5>Difficulty: {{ problem.category }}</h5>
 				<div class="jumbotron">
@@ -95,7 +95,7 @@ $.ajaxSetup({
 				<h1>Messages</h1>
 				<div class="jumbotron" id="mess">
 				</div>
-				<div id="twit">
+				<div id="twit" style="display:none;">
 					<a href="https://twitter.com/share" class="twitter-share-button" data-url=" " data-text="I have solved '{{problem.title}}'!" data-via="GoCodeGo" data-size="large" data-related="GoCodeGo" data-count="none" id="twit">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 				</div>
 			</div>
@@ -110,15 +110,17 @@ $.ajaxSetup({
 				<div align="right">
 			        {% if user.is_authenticated %}
 				        {% if solved %}
-				        	<a class="btn btn-primary" href="#" role="button">Solved!</a>
+				        	<a class="btn btn-success" href="#" role="button">Solved!</a>
 				        {% else %}
-                            <a class="btn btn-primary" href="#" id="save">Save</a>
-				        	<a class="btn btn-primary" href="#" id="subm">Submit!</a>
-				        	<a class="btn btn-primary" href="/problems/" id="ret" style="display:none;">Return to problems</a>
+                            <a class="btn btn-success" href="#" id="save">Save</a>
+				        	<a class="btn btn-success" href="#" id="subm">Submit!</a>
+				        	<a class="btn btn-success" href="/problems/" id="ret" style="display:none;">Return to problems</a>
 				        {% endif %}
 				    {% else %}
-				    	<a class="btn btn-primary" href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
+				    	<a class="btn btn-success" href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
 			        {% endif %}
+                    <br />
+                    <br />
 				</div>
 			</div>
 		</div>

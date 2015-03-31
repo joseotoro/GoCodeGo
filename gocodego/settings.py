@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = 'gocodego.User'
 
 # Application definition
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = (
     'social_auth',
     'django_gravatar',
     'gocodego',
+    'django.contrib.humanize',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,6 +80,8 @@ SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
 SOCIAL_AUTH_ENABLED_BACKENDS = ('google')
+
+SOCIAL_AUTH_USER_MODEL = 'gocodego.User'
 
 #################
 
