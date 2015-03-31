@@ -25,11 +25,7 @@
             {{ u.date_joined | naturaltime }}
             </li>
             <li class="list-group-item text-right"><span class="pull-left"><strong class="">Last seen</strong></span>
-            {% if u.is_active %}
-                Now
-            {% else %}
-                {{ u.last_login | naturaltime }}
-            {% endif %}
+            {{ u.last_login | naturaltime }}
             </li>
             {% if u.first_name %}
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">First name</strong></span>
