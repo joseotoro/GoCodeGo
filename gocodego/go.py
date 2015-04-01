@@ -34,7 +34,7 @@ def check(request):
 
             if res == "": # Problem solved
                 if check_solved is None:
-                    check_solved = ProblemSolution(user=request.user, problem=Problem.objects.get(id=problem_id), solution=code_user, pub_date=timezone.now, checked=True)
+                    check_solved = ProblemSolution(user=request.user, problem=Problem.objects.get(id=problem_id), solution=code_user, pub_date=timezone.now(), checked=True)
                 else:
                     check_solved.checked = True
                     check_solved.solution = code_user
