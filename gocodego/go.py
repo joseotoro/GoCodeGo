@@ -22,8 +22,10 @@ def check(request):
             code = """package main
                         import "fmt"
                         import "math"
+                        import "strconv"
 
                         var _ = math.E
+                        var _ = strconv.IntSize
 
                         func assert(result interface{}, expected interface{}){
                             if(result != expected){
