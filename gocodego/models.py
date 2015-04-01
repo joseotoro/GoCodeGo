@@ -11,7 +11,7 @@ class GetOrNoneManager(models.Manager):
             return None
 
 class User(AbstractUser):
-    bio = models.TextField(max_length=1000, null=True)
+    bio = models.TextField(max_length=150, null=True)
     twitter = models.CharField(max_length=80, null=True)
     github = models.CharField(max_length=80, null=True)
     linkedin = models.CharField(max_length=80, null=True)

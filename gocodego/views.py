@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import logout as auth_logout
 
 from models import Problem, ProblemSolution, User
+from forms import UserForm
 
 
 def index(request):
@@ -71,4 +72,45 @@ def profile(request, user):
         elif p == "Hard":
             points += 2000
 
-    return render(request, 'profile.html', {'u': user, 'problems': len(prob_solved), 'points': points})
+    return render(request, 'profile/profile.html', {'u': user, 'problems': len(prob_solved), 'points': points})
+
+def profile_edit(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    return render(request, 'profile/edit.html')
+
+def profile_save(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+
+        username = request.POST['username']
+        user_error = None
+        user = None
+
+        try:
+           user =  User.objects.get(username=username)
+        except User.DoesNotExist:
+           pass
+        
+        if user is not None and user.username.lower() != request.user.username.lower():
+            user_error = 'Username is already taken!'
+        if form.is_valid() and user_error is None:
+            request.user.username = username
+            request.user.first_name = form.cleaned_data['first_name']
+            request.user.last_name = form.cleaned_data['last_name']
+            request.user.bio = form.cleaned_data['bio']
+            request.user.website = form.cleaned_data['website']
+            request.user.facebook = form.cleaned_data['facebook']
+            request.user.twitter = form.cleaned_data['twitter']
+            request.user.linkedin = form.cleaned_data['linkedin']
+            request.user.github = form.cleaned_data['github']
+
+            request.user.save()
+
+            return render(request, 'profile/edit.html', {'ok': 'Changes saved!'})
+        else:
+            return render(request, 'profile/edit.html', {'ok': None, 'errors': form.errors, 'user_error': user_error})
+
+    return HttpResponseRedirect('/profile/edit/')

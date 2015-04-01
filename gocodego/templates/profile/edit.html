@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %} GoCodeGo - Edit profile {% endblock %}
+
+{% block primary %}
+
+<section class="profile">
+<div class="container">
+   <div class="row row-color">
+    <br>
+    <div class="col-sm-8 col-sm-offset-2">
+        <!--left col-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h1>Edit profile</h1>
+                <a href="/profile/{{user.username}}">Back to profile</a>
+            </div>
+            <div class="panel-body">
+                {% if errors.username %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        Username {{errors.username}}
+                    </div>
+                {% endif %}
+                {% if user_error %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        {{user_error}}
+                    </div>
+                {% endif %}
+                {% if errors.first_name %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        First name {{errors.first_name}}
+                    </div>
+                {% endif %}
+                {% if errors.last_name %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        Last name {{errors.last_name}}
+                    </div>
+                {% endif %}
+                {% if errors.bio %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        Bio {{errors.bio}}
+                    </div>
+                {% endif %}
+                {% if errors.website %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        Website {{errors.website}}
+                    </div>
+                {% endif %}
+                {% if errors.twitter %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        Twitter {{errors.twitter}}
+                    </div>
+                {% endif %}
+                {% if errors.facebook %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        Facebook {{errors.facebook}}
+                    </div>
+                {% endif %}
+                {% if errors.linkedin %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        LinkedIn {{errors.linkedin}}
+                    </div>
+                {% endif %}
+                {% if errors.github %}                
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-danger">
+                        Github {{errors.github}}
+                    </div>
+                {% endif %}
+                {% if ok %}
+                    <div class="col-sm-offset-2 col-sm-10 alert alert-success">
+                        {{ ok }}
+                    </div>
+                {% endif %}
+                <div class="col-sm-offset-2 col-sm-10">
+                (You can change your profile image at <a href="http://gravatar.com" target="blank">gravatar</a>)<br><br>
+                </div>
+                <form action="/profile/save/" method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    <div class="form-group {% if user_error %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <label for="username" class="col-sm-2 control-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="username" placeholder="Write here!" value="{{ user.username }}">
+                        </div>
+                    </div>
+                    <div class="form-group {% if errors.first_name %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <label for="first_name" class="col-sm-2 control-label">First name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="first_name" placeholder="Write here!" value="{% if user.first_name %}{{ user.first_name }}{% endif %}">
+                        </div>
+                    </div>
+                    <div class="form-group {% if errors.last_name %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <label for="last_name" class="col-sm-2 control-label">Last name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="last_name" placeholder="Write here!" value="{% if user.last_name %}{{ user.last_name }}{% endif %}">
+                        </div>
+                    </div>
+                    <div class="form-group {% if errors.bio %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <label for="bio" class="col-sm-2 control-label">Bio</label>
+                        <div class="col-sm-10">
+                            {% if user.bio %}
+                                <textarea class="form-control" rows="3" name="bio" placeholder="Max 150 characters">{{ user.bio }}</textarea>
+                            {% else %}
+                                <textarea class="form-control" rows="3" name="bio" placeholder="Max 150 characters"></textarea>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group {% if errors.website %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <i class="col-sm-2 control-label fa fa-link"></i>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="website" placeholder="@" value="{% if user.website %}{{ user.website }}{% endif %}">
+                        </div>
+                    </div>
+                    <div class="form-group {% if errors.twitter %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <i class="col-sm-2 control-label fa fa-twitter"></i>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="twitter" placeholder="@" value="{% if user.twitter %}{{ user.twitter }}{% endif %}">
+                        </div>
+                    </div>
+                    <div class="form-group {% if errors.facebook %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <i class="col-sm-2 control-label fa fa-facebook"></i>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="facebook" placeholder="@" value="{% if user.facebook %}{{ user.facebook }}{% endif %}">
+                        </div>
+                    </div>
+                    <div class="form-group {% if errors.linkedin %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <i class="col-sm-2 control-label fa fa-linkedin"></i>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="linkedin" placeholder="@" value="{% if user.linkedin %}{{ user.linkedin }}{% endif %}">
+                        </div>
+                    </div>
+                    <div class="form-group {% if errors.github %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <i class="col-sm-2 control-label fa fa-github"></i>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="github" placeholder="@" value="{% if user.github %}{{ user.github }}{% endif %}">
+                        </div>
+                    </div>
+                    <div class="form-group {% if errors.github %}has-error{% endif %}{% if ok %}has-success{% endif %}">
+                        <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" class="btn btn-success pull-right">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+{% endblock %}

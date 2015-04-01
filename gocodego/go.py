@@ -1,7 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404, render
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import HttpResponse
 from django.utils import timezone
 
 import subprocess
@@ -11,8 +8,9 @@ import uuid
 
 from models import Problem, ProblemSolution
 
-@login_required
 def check(request):
+    if not request.user.is_authenticated():
+        return HttpResponse('')
     if request.is_ajax():
         code_user =  request.POST['code'].strip()
         problem_id = int(request.POST['problem'])
@@ -50,8 +48,9 @@ def check(request):
     else:
         return HttpResponse('')
 
-@login_required
 def save(request):
+    if not request.user.is_authenticated():
+        return HttpResponse('')
     if request.is_ajax():
         code_user = request.POST['code'].strip()
         problem_id = int(request.POST['problem'])

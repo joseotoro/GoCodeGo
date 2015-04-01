@@ -39,7 +39,6 @@
 
       ga('create', 'UA-41535016-4', 'auto');
       ga('send', 'pageview');
-
     </script>
 
 {% block head %}{% endblock %}
@@ -47,16 +46,6 @@
 </head>
 
 <body id="page-top" class="index">
-    <!-- Facebook code -->
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.0";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -68,7 +57,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#page-top">GoCodeGo</a>
+                <a class="navbar-brand" href="#page-top">GoCodeGo (Beta)</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -92,7 +81,7 @@
                         {% if user.is_authenticated %}
                         <li class="dropdown">
                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                             <img src="{% gravatar_url user.email 100 %}" class="profile-image img-circle"/><strong class="caret"></strong></a>
+                             <img src="{% gravatar_url user.email 100 %}" class="profile-image"/><strong class="caret"></strong></a>
                             <ul class="dropdown-menu" role="menu"> 
                                 <li>
                                     <a href="/profile/{{ user.username }}">{{ user.username }}</a>
@@ -106,7 +95,7 @@
                         </li>
                         {% else %}
                         <li>
-                            <a href="{% url 'socialauth_begin' 'google-oauth2' %}">Login with Google</a>
+                            <a href="{% url 'socialauth_begin' 'google-oauth2' %}">Sign in with Google</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -125,13 +114,6 @@
     <footer class="text-center">
         <div class="footer-above">
             <div class="container">
-                <div class="row">
-                    <a href="https://twitter.com/GoCodeGo" class="twitter-follow-button" data-show-count="false">Follow @GoCodeGo</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-                    <div class="row">
-                        <div class="fb-like" data-href="https://facebook.com/gocodego" data-width="300" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-                    </div>
-                <br />
-                </div>
             </div>
         </div>
         <div class="footer-below">

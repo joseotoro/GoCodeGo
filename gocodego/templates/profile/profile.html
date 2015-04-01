@@ -14,7 +14,12 @@
     <div class="col-sm-3">
         <!--left col-->
         <div class="panel panel-default">
-            <div class="panel-heading"><h1>{{ u.username }}</h1></div>
+            <div class="panel-heading">
+                <h1>{{ u.username }}</h1>
+                {% if user.is_authenticated and user.username == u.username %}
+                    <a href="/profile/edit/">Edit profile</a>
+                {% endif %}
+            </div>
             <div class="panel-body">
             <img title="profile image" class="img img-responsive" src="{% gravatar_url u.email 500 %}">
             </div>
@@ -60,7 +65,7 @@
             </li>
         </ul>
         <div class="panel panel-default">
-            <div class="panel-heading">Social Media</div>
+            <div class="panel-heading">Social</div>
             <div class="panel-body">
             {% if u.twitter %}
             <a href="http://twitter.com/{{u.twitter}}" target=blank><i class="fa fa-twitter fa-2x"></i></a>
@@ -82,7 +87,11 @@
     <div class="col-sm-9" contenteditable="false" style="">
         <div class="panel panel-default">
             <div class="panel-heading">{{ u.username }}'s bio</div>
-            <div class="panel-body">{{ u.bio }}</div>
+            <div class="panel-body">
+            {% if u.bio %}
+                <pre>{{ u.bio }}</pre>
+            {% endif %}
+            </div>
         </div>
     </div>
 </div>
