@@ -19,9 +19,10 @@ urlpatterns = patterns('',
     url(r'^problems/save_solution/$', go.save, name='save_solution'),
 
     # Profile
-    url(r'^profile/edit/$', views.profile_edit, name='profile_edit'),
-    url(r'^profile/save/$', views.profile_save, name='profile_save'),
-    url(r'^profile/(.*)$', views.profile, name='profile'),
+    url(r'^users/$', views.users, name='users'),
+    url(r'^profile_edit/$', views.profile_edit, name='profile_edit'),
+    url(r'^profile_save/$', views.profile_save, name='profile_save'),
+    url(r'^users/(.*)$', views.user, name='profile'),
 
     # Index
     url(r'^$', views.index, name='index'),

@@ -6,6 +6,8 @@
 
 {% block pagetitle %} GoCodeGo - {{ u.username }} {% endblock %}
 
+{% block usersactive %} class="active" {% endblock %}
+
 {% block primary %}
 <section class="profile">
 <div class="container">
@@ -15,9 +17,9 @@
         <!--left col-->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h1>{{ u.username }}</h1>
+                <h4>{{ u.username }}</h4>
                 {% if user.is_authenticated and user.username == u.username %}
-                    <a href="/profile/edit/">Edit profile</a>
+                    <a href="/profile_edit/">Edit profile</a>
                 {% endif %}
             </div>
             <div class="panel-body">

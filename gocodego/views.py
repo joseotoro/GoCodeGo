@@ -55,7 +55,7 @@ def search(request):
     
     return render(request, 'problem/list.html', {'problems': probs, 'solved': prob_solved})
 
-def profile(request, user):
+def user_points(user):
     user = get_object_or_404(User, username=user)
 
     prob_solved = map(lambda prob: prob.problem.id, ProblemSolution.objects.filter(user=user, checked=True))
@@ -72,7 +72,22 @@ def profile(request, user):
         elif p == "Hard":
             points += 2000
 
-    return render(request, 'profile/profile.html', {'u': user, 'problems': len(prob_solved), 'points': points})
+    return (len(prob_solved), points)
+
+def users(request):
+    users = map(lambda u: u.username, list(User.objects.all()))
+    users = map(lambda u: (u, user_points(u)[1]), users)
+    users.sort(key=lambda u: u[1], reverse=True)
+
+    return render(request, 'profile/list.html', {'users': users})
+
+
+def user(request, user):
+    user = get_object_or_404(User, username=user)
+
+    (problems, points) = user_points(user.username)
+
+    return render(request, 'profile/profile.html', {'u': user, 'problems': problems, 'points': points})
 
 def profile_edit(request):
     if not request.user.is_authenticated():
@@ -85,7 +100,7 @@ def profile_save(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
 
-        username = request.POST['username']
+        username = request.POST['username'].replace(' ', '').strip()
         user_error = None
         user = None
 

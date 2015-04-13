@@ -66,6 +66,9 @@
                         <li {% block homeactive %} {% endblock %}>
                             <a href="/">Home</a>
                         </li>
+                        <li {% block usersactive %} {% endblock %}>
+                            <a href="/users/">Users</a>
+                        </li>
                         <li {% block problemsactive %} {% endblock %}>
                             <a href="/problems/">Problems</a>
                         </li>
@@ -84,7 +87,7 @@
                              <img src="{% gravatar_url user.email 100 %}" class="profile-image"/><strong class="caret"></strong></a>
                             <ul class="dropdown-menu" role="menu"> 
                                 <li>
-                                    <a href="/profile/{{ user.username }}">{{ user.username }}</a>
+                                    <a href="/users/{{ user.username }}">{{ user.username }}</a>
                                 </li>
                                 <li class="divider">
                                 </li>

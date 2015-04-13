@@ -13,7 +13,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h1>Edit profile</h1>
-                <a href="/profile/{{user.username}}">Back to profile</a>
+                <a href="/users/{{user.username}}">Back to profile</a>
             </div>
             <div class="panel-body">
                 {% if errors.username %}
@@ -74,7 +74,7 @@
                 <div class="col-sm-offset-2 col-sm-10">
                 (You can change your profile image at <a href="http://gravatar.com" target="blank">gravatar</a>)<br><br>
                 </div>
-                <form action="/profile/save/" method="post" class="form-horizontal">
+                <form action="/profile_save/" method="post" class="form-horizontal">
                     {% csrf_token %}
                     <div class="form-group {% if user_error %}has-error{% endif %}{% if ok %}has-success{% endif %}">
                         <label for="username" class="col-sm-2 control-label">Username</label>
