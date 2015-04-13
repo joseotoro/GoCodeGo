@@ -9,6 +9,7 @@
 $(document).ready(function() {
    $("#subm").click(function(event){
    		event.preventDefault();
+        $('#mess').hide().html("<pre>Running...</pre>").fadeIn();
         $.ajax({
              type:"POST",
              url:"/problems/check_solution/",

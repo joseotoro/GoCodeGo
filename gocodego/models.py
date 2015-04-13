@@ -1,6 +1,18 @@
 from django.db import models
-from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
+
+ICON_CHOICES = (
+    (0, 'info'),
+    (1, 'success'),
+    (2, 'warning'),
+    (3, 'danger'),
+)
+
+FRIENDSHIP_CHOICES = (
+    (0, 'PENDING'),
+    (1, 'OK'),
+    (2, 'BLOCKED'),
+)
 
 class GetOrNoneManager(models.Manager):
     """Adds get_or_none method to objects"""
@@ -17,6 +29,23 @@ class User(AbstractUser):
     linkedin = models.CharField(max_length=80, null=True)
     facebook = models.CharField(max_length=80, null=True)
     website = models.CharField(max_length=150, null=True)
+
+class Friendship(models.Model):
+    source = models.ForeignKey(User, related_name='source')
+    target = models.ForeignKey(User, related_name='target')
+    accepted = models.IntegerField(choices=FRIENDSHIP_CHOICES)
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, related_name='sender')
+    receiver = models.ForeignKey(User, related_name='receiver')
+    message = models.TextField(max_length=300)
+    read = models.BooleanField(default=False)
+
+class Notification(models.Model):
+    user = models.ForeignKey(User)
+    date = models.DateTimeField('notification date')
+    message = models.CharField(max_length=300)
+    icon = models.IntegerField(choices=ICON_CHOICES)
 
 class Problem(models.Model):
     title = models.CharField(max_length=200)	
@@ -40,15 +69,4 @@ class ProblemSolution(models.Model):
 
     def __str__(self):
         return str(self.problem) + ' - ' + self.user.username
- 
-@admin.register(Problem)
-class ProblemAdmin(admin.ModelAdmin):
-    fields = ('title', 'category', 'description', 'template', 'test_cases', 'pub_date')
 
-@admin.register(ProblemSolution)
-class ProblemSolutionAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    pass
